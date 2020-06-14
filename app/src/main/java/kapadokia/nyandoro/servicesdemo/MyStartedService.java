@@ -2,8 +2,10 @@ package kapadokia.nyandoro.servicesdemo;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -25,13 +27,9 @@ public class MyStartedService extends Service {
 
         // Performing Task [should be short duration tasks not to block the UI ]
 
-        int sleepTime =intent.getIntExtra("sleepTime", 1); 
+        int sleepTime =intent.getIntExtra("sleepTime", 1);
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        new MyAsyncTask().execute(sleepTime);
 
         return START_STICKY;
 
@@ -60,5 +58,56 @@ public class MyStartedService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
+    }
+
+    class MyAsyncTask extends AsyncTask<Integer, String,Void> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i(TAG, "onPreExecute: on Thread "+Thread.currentThread().getName());
+        }
+
+        @Override
+        protected Void doInBackground(Integer... voids) {
+            Log.i(TAG, "doInBackground:on Thread  "+Thread.currentThread().getName());
+
+            int sleepTime = voids[0];
+            int ctr= 1;
+
+            // dummy long operation
+            while (ctr<= sleepTime){
+                publishProgress("Counter is now" + ctr);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                ctr++;
+            }
+
+            return null;
+
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+            Toast.makeText(MyStartedService.this, values[0], Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Counter value"+ values[0]+"onProgressUpdate:on Thread  "+Thread.currentThread().getName());
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            stopSelf(); // automatically stops the service within the class itself
+            Log.i(TAG, "onPostExecute:on Thread "+Thread.currentThread().getName());
+
+        }
     }
 }
