@@ -19,11 +19,21 @@
         android:onClick="startedService"
         android:layout_marginTop="100dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/started_service_tv"
+        android:layout_below="@+id/start_service_button"
+        android:text="@string/started_service_result_here"
+        android:gravity="center"
+        android:textSize="@dimen/text_size"
+        android:textColor="@android:color/black"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/stop_service_button"
-        android:layout_below="@id/start_service_button"
+        android:layout_below="@id/started_service_tv"
         android:text="@string/stop_the_started_service"
         android:onClick="stopStartedService"
         android:layout_marginTop="@dimen/small_dimens"/>
@@ -36,4 +46,14 @@
         android:text="@string/start_intent_service"
         android:onClick="startIntentService"
         android:layout_marginTop="@dimen/small_dimens"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/intent_service_tv"
+        android:layout_below="@+id/intent_service_button"
+        android:text="@string/intent_service_result"
+        android:gravity="center"
+        android:textSize="@dimen/text_size"
+        android:textColor="@android:color/black"/>
 </RelativeLayout>

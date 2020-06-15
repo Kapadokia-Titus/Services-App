@@ -4,4 +4,6 @@
     <string name="stop_the_started_service">Stop the started service</string>
     <string name="tester">Tester</string>
     <string name="start_intent_service">start intent service</string>
+    <string name="started_service_result_here">started service result here</string>
+    <string name="intent_service_result">Intent service Result</string>
 </resources>

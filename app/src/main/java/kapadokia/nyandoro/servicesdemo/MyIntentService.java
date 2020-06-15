@@ -2,6 +2,8 @@ package kapadokia.nyandoro.servicesdemo;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -27,7 +29,10 @@ public class MyIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.i(TAG, "onHandleIntent: Thread name"+ Thread.currentThread().getName());
+
         int sleepTime = intent.getIntExtra("sleepTime", 1);
+
+        ResultReceiver resultReceiver = intent.getParcelableExtra("result");
         int ctr= 1;
 
         // dummy long operation
@@ -41,6 +46,11 @@ public class MyIntentService extends IntentService {
 
             ctr++;
         }
+
+        Bundle bundle  = new Bundle();
+        bundle.putString("resultIntentService", "Counter stopped at "+ ctr +" seconds");
+        resultReceiver.send(18, bundle);
+
     }
 
     @Override
