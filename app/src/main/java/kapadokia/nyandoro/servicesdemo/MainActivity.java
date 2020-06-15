@@ -3,6 +3,7 @@ package kapadokia.nyandoro.servicesdemo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.AsyncTaskLoader;
 
+import android.app.IntentService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,4 +35,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void startIntentService(View view) {
+
+        Intent intent = new Intent(getApplicationContext(), IntentService.class);
+        intent.putExtra("sleepTime", 1);
+        startService(intent);
+
+    }
 }
