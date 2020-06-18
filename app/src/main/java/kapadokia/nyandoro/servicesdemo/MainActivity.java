@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    // receives the data back from MyIntentService.class using Result
     private  class  MyResultReceiver extends ResultReceiver{
 
         /**
