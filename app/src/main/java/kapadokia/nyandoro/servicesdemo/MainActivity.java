@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.AsyncTaskLoader;
 
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,7 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // attaching a receiver
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.service.to.activity");
+        registerReceiver(myStarterServiceReceiver, intentFilter);
+    }
+
+    private BroadcastReceiver myStarterServiceReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // detaching a receiver
+        unregisterReceiver(myStarterServiceReceiver);
+    }
 
     // receives the data back from MyIntentService.class using Result
     private  class  MyResultReceiver extends ResultReceiver{
